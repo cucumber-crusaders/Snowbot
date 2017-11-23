@@ -1,2 +1,2 @@
 # Snowbot
-Multi-function discord bot created by stevethecow. 
+Discord bot created by stevethecow. 
