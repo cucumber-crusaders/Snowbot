@@ -18,6 +18,7 @@ import argparse
 import aiohttp
 import configparser
 import os
+import datetime
 
 class Snowbot(commands.Bot):
     
@@ -495,7 +496,25 @@ class Snowbot(commands.Bot):
         self.save_files()
     
     
+    async def player_info_embed(self,ctx, who : discord.User):
+        whom = self.__main_server.get_member(who.id)
+        w = self.__players[who.id]
+        embed = discord.Embed(colour=self.teamcolor(who), description="@mention", timestamp=datetime.datetime.utcfromtimestamp(1507958257))
     
+        embed.set_thumbnail(url="user avatar")
+        embed.set_author(name="username", url="https://discordapp.com", icon_url="https://cdn.discordapp.com/embed/avatars/0.png")
+        embed.set_footer(text="bot by Ambassador Organa", icon_url="organa")
+        
+        embed.add_field(name="Team", value="district your mom")
+        embed.add_field(name="Games", value="x", inline=True)
+        embed.add_field(name="Events", value="x", inline=True)
+        embed.add_field(name="Wins", value="y", inline=True)
+        embed.add_field(name="Losses", value="z", inline=True)
+        embed.add_field(name="Kills", value="a", inline=True)
+        embed.add_field(name="Deaths", value="b", inline=True)
+        embed.add_field(name="KDR", value="c/d", inline=True)
+        
+        await self.say(embed=embed)
     #        _           _                               
     #       | |         | |                              
     #     __| |   __ _  | |_    __ _                     
