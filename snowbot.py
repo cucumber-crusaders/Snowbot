@@ -40,7 +40,8 @@ class Snowbot(commands.Bot):
             data = json.load(json_file)
             for rec in data:
                 lead = data[rec]["leader"]
-                self.__players[lead]["team"] = rec
+                if lead in self.__players:
+                    self.__players[lead]["team"] = rec
         self.__teams = data
 
         with open('events.json') as json_file:  
@@ -49,7 +50,7 @@ class Snowbot(commands.Bot):
         
         
         self.__death_color = discord.Color(int(self.__config["game"]["death-color"],16))
-        self.__death_color = discord.Color(int(self.__config["game"]["event-color"],16))
+        self.__event_color = discord.Color(int(self.__config["game"]["event-color"],16))
         self.__trigger_rate= float(self.__config["game"]["trigger-rate"])
         
         self.__color = discord.Color(int(self.__config["snowbot"]["color"],16))
@@ -64,7 +65,7 @@ class Snowbot(commands.Bot):
         
         
         super().__init__(command_prefix=pref,description=desc,**options)
-        
+        self.register_snowbot_commands()
         
         
     async def on_ready(self):
@@ -78,7 +79,6 @@ class Snowbot(commands.Bot):
         self.__all_players_role = discord.utils.get(self.__main_server.roles, id=self.__config["roles"]["all-players"])
         self.__alive_players_role = discord.utils.get(self.__main_server.roles, id=self.__config["roles"]["alive-players"])
         
-        self.register_snowbot_commands()
         
         if self.__config["snowbot"].getboolean("notify-startup"):
             
@@ -93,7 +93,8 @@ class Snowbot(commands.Bot):
     
     
     async def on_message(self,message):
-       if message.channel.id in self.__watched_channels and not self.__reaping_active:
+       #if message.channel.id in self.__watched_channels and not self.__reaping_active:
+       if not self.__reaping_active:
            i = random.random()*100
            if(i<self.__trigger_rate):
                await self.__trig()
@@ -107,20 +108,21 @@ class Snowbot(commands.Bot):
     
     
     def register_snowbot_commands(self):
-        self.command(name="remaining_tributes",checks=[self.public_command],pass_context=True,aliases=['list','alive','tributes','survs','survivors'])(self.remaining_tributes)    
-        self.command(name="team",checks=[self.public_command],pass_context=True,aliases=['district','dist'])(self.team)
-        self.command(name="list_teams",checks=[self.public_command],pass_context=True,aliases=['teams','districts'])(self.list_teams)
-        self.command(name="is_alive",checks=[self.public_command],pass_context=True,aliases=["status","dead"])(self.is_alive)
-        self.command(name="join_team",checks=[self.public_command],pass_context=True,aliases=['join','enlist','set_team'])(self.join_team)
+        self.command(name="remaining_tributes",pass_context=True,aliases=['list','alive','tributes','survs','survivors'])(self.remaining_tributes)   
+        self.command(name="team",pass_context=True,aliases=['district','dist'])(self.team)
+        self.command(name="list_teams",pass_context=True,aliases=['teams','districts'])(self.list_teams)
+        self.command(name="is_alive",pass_context=True,aliases=["status","dead"])(self.is_alive)
+        self.command(name="join_team",pass_context=True,aliases=['join','enlist','set_team'])(self.join_team)
         
-        self.command(name="reload",checks=[self.mod_command],pass_context=True,aliases=['refresh','update'])(self.reload)
+        self.command(name="reload",pass_context=True,aliases=['refresh','update'])(self.reload)
         #self.command(name="fix_leaders",checks=[self.mod_command],pass_context=True)
         
-        self.command(name="reap",checks=[self.mod_command],pass_context=True,aliases=['start','begin','reaping'])(self.reap)
-        self.command(name="cull",checks=[self.mod_command],pass_context=True,aliases=['end','reset','cancel','finish'])(self.cull)
-        self.command(name="trig",checks=[self.mod_command],pass_context=True,aliases=['trigger','event','go','trig'])
-        self.command(name="list_events",checks=[self.mod_command],pass_context=True,aliases=['events'])
+        self.command(name="reap",pass_context=True,aliases=['start','begin','reaping'])(self.reap)
+        self.command(name="cull",pass_context=True,aliases=['end','reset','cancel','finish'])(self.cull)
+        self.command(name="trig",pass_context=True,aliases=['trigger','event','go'])(self.trig)
+        self.command(name="list_events",pass_context=True,aliases=['events'])(self.list_events)
         #self.command(name="set_trigger_rate",checks=[self.mod_command],pass_context=False,aliases=['feminism','rate'])(self.set_trigger_rate)
+        self.command(name="setup_teams",pass_context=True,aliases=['reset_teams','fix_teams'])(self.setup_teams)
         
     def run(self):
         snowkey = self.__config["discordapp"]["token"]        
@@ -171,14 +173,18 @@ class Snowbot(commands.Bot):
         
         
     
-    def mod_command(self):
+    def mod_command(self,ctx):
+        modc = self.__config["channels"]["mod-console"]
+        #return ctx.message.channel.id == modc
         def predicate(ctx):
-            return ctx.message.channel.id == self.__config["channels"]["mod-console"]
+            return ctx.message.channel.id == modc
         return commands.check(predicate)
     
-    def public_command(self):
+    def public_command(self,ctx):
+        modc =  set([self.__config["channels"]["mod-console"],self.__config["channels"]["public-console"]])
+        #return ctx.message.channel.id in modc
         def predicate(ctx):
-            return ctx.message.channel.id in set([self.__config["channels"]["mod-console"],self.__config["channels"]["public-console"]])
+            return ctx.message.channel.id in modc
         return commands.check(predicate)
     
     
@@ -227,28 +233,28 @@ class Snowbot(commands.Bot):
 
         
     def district(self,who : discord.User):
-        tid = self.__snow_players[who.id]["team"]
+        tid = self.__players[who.id]["team"]
         if not tid in self.__teams:
-            self.__give_team(who)    
+            self.give_team(who)    
         return self.__teams[tid]["name"]
     
     def teamcolor(self,who : discord.User):
-        tid = self.__snow_players[who.id]["team"]
+        tid = self.__players[who.id]["team"]
         if not tid in self.__teams:
-            self.__give_team(who) 
+            self.give_team(who) 
         col = int(self.__teams[tid]["color"],16)
         return discord.Color(col)
     
     def teampic(self,who : discord.User):
-        tid = self.__snow_players[who.id]["team"]
+        tid = self.__players[who.id]["team"]
         if not tid in self.__teams:
             self.__give_team(who) 
         return self.__teams[tid]["image"]
     
     def tagline(self,who : discord.User):
-        tid = self.__snow_players[who.id]["team"]
+        tid = self.__players[who.id]["team"]
         if not tid in self.__teams:
-            self.__give_team(who) 
+            self.give_team(who) 
         return self.__teams[tid]["description"]
     
     async def randusers(self,n=1):
@@ -279,7 +285,7 @@ class Snowbot(commands.Bot):
         kstr = ", ".join(names)
         return kstr
     
-    def actors_str(actors):
+    def actors_str(self,actors):
         if isinstance(actors, list):        
             return [a.mention for a in actors]
         else:
@@ -478,7 +484,7 @@ class Snowbot(commands.Bot):
         teams = self.__teams
         who = ctx.message.author
         if not who.id in player_info:
-            self.add_player(who.id)
+            self.add_player(who)
         leader_of = list(filter(lambda tid: teams[tid]["leader"] == ctx.message.author.id, teams))
         
         if team_id in teams:
@@ -617,8 +623,8 @@ class Snowbot(commands.Bot):
         
         vols = list(filter(lambda u: self.__alive_players_role in u.roles, self.__main_server.members))
         for trib in vols:
-            pillc = self.__teamcolor(trib)
-            em = discord.Embed(title="Tribute seleted from team " + self.__district(trib), colour=pillc)
+            pillc = self.teamcolor(trib)
+            em = discord.Embed(title="Tribute selected from team " + self.district(trib), colour=pillc)
             em.set_author(name=trib.display_name, icon_url=trib.avatar_url)
             em.set_footer(text=self.tagline(trib),icon_url=self.teampic(trib))
             await self.send_message(destination=self.__arena_channel,embed=em)
@@ -643,4 +649,10 @@ class Snowbot(commands.Bot):
             x = self.__snow_events[e]["actors"]
             s = s + "\n" + e + " (" + str(x) + ")"
         await self.say(s)
+        
+        
+    async def setup_teams(self,ctx):
+        for rec in self.__players:
+            self.__players[rec]["team"] = random.choice(["1","2","3"])
+        self.save_files()
     
