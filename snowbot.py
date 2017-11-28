@@ -108,21 +108,20 @@ class Snowbot(commands.Bot):
     
     
     def register_snowbot_commands(self):
-        self.command(name="remaining_tributes",pass_context=True,aliases=['list','alive','tributes','survs','survivors'])(self.remaining_tributes)   
-        self.command(name="team",pass_context=True,aliases=['district','dist'])(self.team)
-        self.command(name="list_teams",pass_context=True,aliases=['teams','districts'])(self.list_teams)
-        self.command(name="is_alive",pass_context=True,aliases=["status","dead"])(self.is_alive)
-        self.command(name="join_team",pass_context=True,aliases=['join','enlist','set_team'])(self.join_team)
+        self.public_command()(self.command(name="remaining_tributes",pass_context=True,aliases=['list','alive','tributes','survs','survivors'])(self.remaining_tributes))  
+        self.public_command()(self.command(name="team",pass_context=True,aliases=['district','dist'])(self.team))
+        self.public_command()(self.command(name="list_teams",pass_context=True,aliases=['teams','districts'])(self.list_teams))
+        self.public_command()(self.command(name="is_alive",pass_context=True,aliases=["status","dead"])(self.is_alive))
+        self.public_command()(self.command(name="join_team",pass_context=True,aliases=['join','enlist','set_team'])(self.join_team))
         
-        self.command(name="reload",pass_context=True,aliases=['refresh','update'])(self.reload)
+        self.mod_command()(self.command(name="reload",pass_context=True,aliases=['refresh','update'])(self.reload))
         #self.command(name="fix_leaders",checks=[self.mod_command],pass_context=True)
-        
-        self.command(name="reap",pass_context=True,aliases=['start','begin','reaping'])(self.reap)
-        self.command(name="cull",pass_context=True,aliases=['end','reset','cancel','finish'])(self.cull)
-        self.command(name="trig",pass_context=True,aliases=['trigger','event','go'])(self.trig)
-        self.command(name="list_events",pass_context=True,aliases=['events'])(self.list_events)
+        self.mod_command()(self.command(name="reap",pass_context=True,aliases=['start','begin','reaping'])(self.reap))
+        self.mod_command()(self.command(name="cull",pass_context=True,aliases=['end','reset','cancel','finish'])(self.cull))
+        self.mod_command()(self.command(name="trig",pass_context=True,aliases=['trigger','event','go'])(self.trig))
+        self.mod_command()(self.command(name="list_events",pass_context=True,aliases=['events'])(self.list_events))
         #self.command(name="set_trigger_rate",checks=[self.mod_command],pass_context=False,aliases=['feminism','rate'])(self.set_trigger_rate)
-        self.command(name="setup_teams",pass_context=True,aliases=['reset_teams','fix_teams'])(self.setup_teams)
+        self.mod_command()(self.command(name="setup_teams",pass_context=True,aliases=['reset_teams','fix_teams'])(self.setup_teams))
         
     def run(self):
         snowkey = self.__config["discordapp"]["token"]        
@@ -173,14 +172,14 @@ class Snowbot(commands.Bot):
         
         
     
-    def mod_command(self,ctx):
+    def mod_command(self):
         modc = self.__config["channels"]["mod-console"]
         #return ctx.message.channel.id == modc
         def predicate(ctx):
             return ctx.message.channel.id == modc
         return commands.check(predicate)
     
-    def public_command(self,ctx):
+    def public_command(self):
         modc =  set([self.__config["channels"]["mod-console"],self.__config["channels"]["public-console"]])
         #return ctx.message.channel.id in modc
         def predicate(ctx):
