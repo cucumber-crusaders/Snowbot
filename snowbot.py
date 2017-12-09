@@ -23,6 +23,9 @@ import datetime
 class Snowbot(commands.Bot):
     
     def __init__(self,path=r"C:\Python\snowbot",**options):
+        self.__version = "0.0.1"
+        print("For help:")
+        print("http://discord.gg/5HZE9A4")
         """Populate attrs from config"""
         
         os.chdir(path)
@@ -69,27 +72,34 @@ class Snowbot(commands.Bot):
         
         
     async def on_ready(self):
-        self.__main_server = self.get_server(self.__config["servers"]["main"])
         
-        self.__mod_console = self.get_channel(self.__config["channels"]["mod-console"])
-        self.__public_console = self.get_channel(self.__config["channels"]["public-console"])
-        self.__log_channel = self.get_channel(self.__config["channels"]["log"])
-        self.__arena_channel = self.get_channel(self.__config["channels"]["arena"])
-        
-        self.__all_players_role = discord.utils.get(self.__main_server.roles, id=self.__config["roles"]["all-players"])
-        self.__alive_players_role = discord.utils.get(self.__main_server.roles, id=self.__config["roles"]["alive-players"])
-        
-        
-        if self.__config["snowbot"].getboolean("notify-startup"):
+        snid = self.user.id
+        inv_link = "https://discordapp.com/oauth2/authorize?client_id=" + snid + "&scope=bot&permissions=117760"
+        print("invite link:")
+        print(inv_link)
+        if(len(self.servers) > 0):
+            self.__main_server = self.get_server(self.__config["servers"]["main"])
             
-            embed = discord.Embed(title=self.__config["snowbot"]["restart-text"], colour=self.__color,url="https://discord.gg/5HZE9A4")
+            self.__mod_console = self.get_channel(self.__config["channels"]["mod-console"])
+            self.__public_console = self.get_channel(self.__config["channels"]["public-console"])
+            self.__log_channel = self.get_channel(self.__config["channels"]["log"])
+            self.__arena_channel = self.get_channel(self.__config["channels"]["arena"])
             
-            embed.set_footer(text="Snowbot version " + self.__config["snowbot"]["version"])
+            self.__all_players_role = discord.utils.get(self.__main_server.roles, id=self.__config["roles"]["all-players"])
+            self.__alive_players_role = discord.utils.get(self.__main_server.roles, id=self.__config["roles"]["alive-players"])
+            
+            
+            if self.__config["snowbot"].getboolean("notify-startup"):
+                
+                embed = discord.Embed(title=self.__config["snowbot"]["restart-text"], colour=self.__color,url="https://discord.gg/5HZE9A4")
+                
+                embed.set_footer(text="Snowbot version " + self.__version)
+            
+                embed.add_field(name="Snowbot discord", value="http://discord.gg/5HZE9A4")
         
-            embed.add_field(name="Snowbot discord", value="http://discord.gg/5HZE9A4")
-    
-            await self.send_message(self.__public_console,embed=embed)
-        await self.change_presence(game=discord.Game(name=self.__gamestatus,type=0))
+                await self.send_message(self.__public_console,embed=embed)
+            await self.change_presence(game=discord.Game(name=self.__gamestatus,type=0))
+            
     
     
     async def on_message(self,message):
@@ -108,24 +118,25 @@ class Snowbot(commands.Bot):
     
     
     def register_snowbot_commands(self):
-        self.public_command()(self.command(name="remaining_tributes",pass_context=True,aliases=['list','alive','tributes','survs','survivors'])(self.remaining_tributes))  
-        self.public_command()(self.command(name="team",pass_context=True,aliases=['district','dist'])(self.team))
-        self.public_command()(self.command(name="list_teams",pass_context=True,aliases=['teams','districts'])(self.list_teams))
-        self.public_command()(self.command(name="is_alive",pass_context=True,aliases=["status","dead"])(self.is_alive))
-        self.public_command()(self.command(name="join_team",pass_context=True,aliases=['join','enlist','set_team'])(self.join_team))
-        
-        self.mod_command()(self.command(name="reload",pass_context=True,aliases=['refresh','update'])(self.reload))
+        self.public_command(self.remaining_tributes,name="remaining_tributes",pass_context=True,aliases=['list','alive','tributes','survs','survivors'])
+        self.public_command(self.team,name="team",pass_context=True,aliases=['district','dist'])
+        self.public_command(self.list_teams,name="list_teams",pass_context=True,aliases=['teams','districts'])
+        self.public_command(self.is_alive,name="is_alive",pass_context=True,aliases=["status","dead"])
+        self.public_command(self.join_team,name="join_team",pass_context=True,aliases=['join','enlist','set_team'])
+        self.public_command(self.player_info_embed,name="player",pass_context=True,aliases=['info'])
+        self.mod_command(self.reload,name="reload",pass_context=True,aliases=['refresh','update'])
         #self.command(name="fix_leaders",checks=[self.mod_command],pass_context=True)
-        self.mod_command()(self.command(name="reap",pass_context=True,aliases=['start','begin','reaping'])(self.reap))
-        self.mod_command()(self.command(name="cull",pass_context=True,aliases=['end','reset','cancel','finish'])(self.cull))
-        self.mod_command()(self.command(name="trig",pass_context=True,aliases=['trigger','event','go'])(self.trig))
-        self.mod_command()(self.command(name="list_events",pass_context=True,aliases=['events'])(self.list_events))
+        self.mod_command(self.reap,name="reap",pass_context=True,aliases=['start','begin','reaping'])
+        self.mod_command(self.cull,name="cull",pass_context=True,aliases=['end','reset','cancel','finish'])
+        self.mod_command(self.trig,name="trig",pass_context=True,aliases=['trigger','event','go'])
+        self.mod_command(self.list_events,name="list_events",pass_context=True,aliases=['events'])
         #self.command(name="set_trigger_rate",checks=[self.mod_command],pass_context=False,aliases=['feminism','rate'])(self.set_trigger_rate)
-        self.mod_command()(self.command(name="setup_teams",pass_context=True,aliases=['reset_teams','fix_teams'])(self.setup_teams))
+        self.mod_command(self.list_teams,name="setup_teams",pass_context=True,aliases=['reset_teams','fix_teams'])
         
     def run(self):
         snowkey = self.__config["discordapp"]["token"]        
         super().run(snowkey)
+        print("If you are seeing this, something went wrong...")
         
     def random_event(self,n=1):
         return random.sample(list(filter(lambda x: self.__snow_events[x]["actors"] <= n and self.__snow_events[x]["actors"] > 0, self.__snow_events)),1)[0]
@@ -165,21 +176,21 @@ class Snowbot(commands.Bot):
         self.__save_files()     
     
     
+    def mod_command(self,func,**options):
+        return self.mod_command_check()(self.command(**options)(func))
     
-    
-    
-    
+    def public_command(self,func,**options):
+        return self.public_command_check()(self.command(**options)(func))
         
-        
     
-    def mod_command(self):
+    def mod_command_check(self):
         modc = self.__config["channels"]["mod-console"]
         #return ctx.message.channel.id == modc
         def predicate(ctx):
             return ctx.message.channel.id == modc
         return commands.check(predicate)
     
-    def public_command(self):
+    def public_command_check(self):
         modc =  set([self.__config["channels"]["mod-console"],self.__config["channels"]["public-console"]])
         #return ctx.message.channel.id in modc
         def predicate(ctx):
@@ -501,23 +512,25 @@ class Snowbot(commands.Bot):
         self.save_files()
     
     
-    async def player_info_embed(self,ctx, who : discord.User):
-        whom = self.__main_server.get_member(who.id)
-        w = self.__players[who.id]
-        embed = discord.Embed(colour=self.teamcolor(who), description="@mention", timestamp=datetime.datetime.utcfromtimestamp(1507958257))
+    async def player_info_embed(self,ctx, who : discord.User=None):
+        if who is None:
+            whom = ctx.message.author
+        else:
+            whom = self.__main_server.get_member(who.id)
+        embed = discord.Embed(colour=self.teamcolor(whom), description=whom.mention, timestamp=datetime.datetime.now())
     
-        embed.set_thumbnail(url="user avatar")
-        embed.set_author(name="username", url="https://discordapp.com", icon_url="https://cdn.discordapp.com/embed/avatars/0.png")
-        embed.set_footer(text="bot by Ambassador Organa", icon_url="organa")
+        #embed.set_thumbnail(url=whom.avatar_url)
+        embed.set_author(name=whom.name, icon_url=whom.avatar_url)
+        embed.set_footer(text=self.tagline(whom), icon_url=self.teampic(whom))
         
-        embed.add_field(name="Team", value="district your mom")
-        embed.add_field(name="Games", value="x", inline=True)
-        embed.add_field(name="Events", value="x", inline=True)
-        embed.add_field(name="Wins", value="y", inline=True)
-        embed.add_field(name="Losses", value="z", inline=True)
-        embed.add_field(name="Kills", value="a", inline=True)
-        embed.add_field(name="Deaths", value="b", inline=True)
-        embed.add_field(name="KDR", value="c/d", inline=True)
+        embed.add_field(name="Team", value=self.district(whom))
+        #embed.add_field(name="Games", value=self.getgames(whom), inline=True)
+        #embed.add_field(name="Events", value="x", inline=True)
+        embed.add_field(name="Wins", value=self.get_wins(whom), inline=True)
+        #embed.add_field(name="Losses", value=self, inline=True)
+        embed.add_field(name="Kills", value=self.get_kills(whom), inline=True)
+        embed.add_field(name="Deaths", value=self.get_deaths(whom), inline=True)
+        #embed.add_field(name="KDR", value=, inline=True)
         
         await self.say(embed=embed)
     #        _           _                               
