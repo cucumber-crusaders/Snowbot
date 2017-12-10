@@ -1,0 +1,23 @@
+{
+	"1":{
+		"name":"JustYourAverageTeam",
+		"leader":"358367588012654592",
+		"image":"https://i.imgur.com/CJCUAbr.png",
+		"description":"hmm",
+		"color":"AD00FF"
+	},
+	"2":{
+		"name":"Team in the description",
+		"leader":"292356168096153600",
+		"image":"https://i.imgur.com/5EOmWZj.gif",
+		"description":"Smash that muthafuckin like button",
+		"color":"FF8800"
+	},
+	"3":{
+		"name":"I couldn't think of another pun with the word team",
+		"leader":"145372956304867328",
+		"image":"https://i.imgur.com/73CMsBO.png",
+		"description":"I am not clever",
+		"color":"FF00FF"
+	}
+}

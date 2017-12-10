@@ -1,0 +1,514 @@
+{
+  "dartfind": {
+    "actors": 1,
+    "dies": [],
+    "kills": {},
+    "text": "{0} finds a dart. Well whaddyaknow.",
+    "img_url": "http://i.imgur.com/ljmpViz.png"
+  },
+  "template": {
+    "actors": 0,
+    "dies": [],
+    "kills": {
+      "0": [
+        0
+      ]
+    },
+    "text": "",
+    "img_url": ""
+  },
+  "banking_clan": {
+    "actors": 1,
+    "dies": [],
+    "kills": {},
+    "text": "The banking clan will sign {0}'s treaty.",
+    "img_url": "http://i.imgur.com/xjcb72G.jpg"
+  },
+  "ooba": {
+    "actors": 1,
+    "dies": [
+      0
+    ],
+    "kills": {},
+    "text": "{0} lost the will to live.\n\nooba ooba :(",
+    "img_url": "http://i.imgur.com/JbTLqrg.png"
+  },
+  "aspirations": {
+    "actors": 1,
+    "dies": [
+      0
+    ],
+    "kills": {},
+    "text": "{0} chokes on their aspirations.",
+    "img_url": "http://i.imgur.com/fJQeiuK.png"
+  },
+  "sprain": {
+    "actors": 1,
+    "dies": [
+      0
+    ],
+    "kills": {},
+    "text": "{0} sprains their ankle falling onto a conveyor, and is crushed by machinery in the droid foundry.",
+    "img_url": "http://i.imgur.com/2mmClVc.jpg"
+  },
+  "bugs": {
+    "actors": 1,
+    "dies": [
+      0
+    ],
+    "kills": {},
+    "text": "{0} thought those bugs couldn't aim.",
+    "img_url": "http://i.imgur.com/RSnydKL.jpg"
+  },
+  "splatter": {
+    "actors": 2,
+    "dies": [
+      1
+    ],
+    "kills": {
+      "0": [
+        1
+      ]
+    },
+    "text": "{1} is casually crossing the podracing track.\n\n{0} runs over {1}.\nNow this is podracing!",
+    "img_url": "http://i.imgur.com/tDifVAN.jpg"
+   },
+  "bisect": {
+    "actors": 2,
+    "dies": [
+      1
+    ],
+    "kills": {
+      "0": [
+        1
+      ]
+    },
+    "text": "After a lightsaber duel with {0}, {1} ends up walking away only half the man they used to be.",
+    "img_url": "http://i.imgur.com/77gDcrJ.jpg"
+   },
+  "bad_trick": {
+    "actors": 2,
+    "dies": [
+      1
+    ],
+    "kills": {
+      "0": [
+        1
+      ]
+    },
+    "text": "{0} shows {1} why spinning isn't actually a good maneuver.",
+    "img_url": "http://i.imgur.com/Dli7qxc.jpg"
+   },
+  "tragedy": {
+    "actors": 2,
+    "dies": [],
+    "kills": {},
+    "text": "{0} tells {1} the tragedy of Darth Plagueis the wise",
+    "img_url": "http://i.imgur.com/3uUyewy.png"
+   },
+  "banish": {
+    "actors": 2,
+    "dies": [],
+    "kills": {},
+    "text": "{1} banishes {0} from Otoh Gunga",
+    "img_url": "http://i.imgur.com/9WuYEF0.png"
+   },
+  "feelsbad": {
+    "actors": 2,
+    "dies": [],
+    "kills": {},
+    "text": "{0} has a bad feeling about this.\n\n{1} doesn't sense anything.",
+    "img_url": "http://i.imgur.com/9pgskQc.jpg"
+   },
+  "deathsticks": {
+    "actors": 2,
+    "dies": [
+      1
+    ],
+    "kills": {
+      "0": [
+        1
+      ]
+    },
+    "text": "{0} spikes {1} drink with deathsticks. {1} dies of an overdose.",
+    "img_url": "http://i.imgur.com/mUP5lR4.png"
+   },
+  "choke": {
+    "actors": 2,
+    "dies": [
+      0
+    ],
+    "kills": {
+      "1": [
+        0
+      ]
+    },
+    "text": "{1} force chokes {0}",
+    "img_url": "http://i.imgur.com/5joQRU0.png"
+   },
+  "high_ground": {
+    "actors": 2,
+    "dies": [
+      0
+    ],
+    "kills": {
+      "1": [
+        0
+      ]
+    },
+    "text": "{1} has the high ground and tells {0} not to try it.\n\n{0} tries it anyway.\n\n{1} cuts {0}'s legs off and leaves them to die.",
+    "img_url": "http://i.imgur.com/fwRiH60.png"
+  },
+  "hello_there": {
+    "actors": 2,
+    "dies": [
+      0
+    ],
+    "kills": {
+      "1": [
+        0
+      ]
+    },
+    "text": "{0} jumps from the ceiling and lands in front of {1}, saying \"Hello there!\"\n\n{1}'s army of droids mows {0} down instantly before either of them have time to react.\n\n{1} comments on {0}'s boldness.",
+    "img_url": "http://i.imgur.com/lxmmTYN.png"
+   },
+  "ironic": {
+    "actors": 2,
+    "dies": [
+      0
+    ],
+    "kills": {
+      "1": [
+        0
+      ]
+    },
+    "text": "{0} taught {1} everything they knew, and {1} killed them in their sleep.\n\nIronic.",
+    "img_url": "http://i.imgur.com/spnprKe.png"
+   },
+  "deformed": {
+    "actors": 2,
+    "dies": [],
+    "kills": {},
+    "text": "{0} tries to kill {1} but {1} escapes.\n\nThis attempt on {1}'s life has left them scarred and deformed.",
+    "img_url": "http://i.imgur.com/48BtbqR.png"
+   },
+  "spin": {
+    "actors": 4,
+    "dies": [
+      1,
+      2,
+      3
+    ],
+    "kills": {
+      "0": [
+        1,
+        2,
+        3
+      ]
+    },
+    "text": "{0} sheev-spins through {1}, {2}, and {3}.",
+    "img_url": "http://i.imgur.com/rdPWgmt.png"
+   },
+  "dewit": {
+    "actors": 3,
+    "dies": [
+      0
+    ],
+    "kills": {
+      "1": [
+        0
+      ]
+    },
+    "text": "{1} is reluctant to kill {0}.\n\n{2} says \"dewit\". {1} beheads {0}",
+    "img_url": "http://i.imgur.com/mxAWCYd.png"
+  },
+  "alt_high_ground": {
+    "actors": 3,
+    "dies": [
+      1,
+      2
+    ],
+    "kills": {
+      "0": [
+        1,
+        2
+      ]
+    },
+    "text": "{1} has the high ground and tells {0} not to try it.\n\n{0} tries it anyway.\n\n{0} does a front flip over {1} and stabs them in the back.\n\n{0} kicks {1}'s lifeless corpse into the lava river and walks away triumphantly.\n\n{2} congratulates {0} on his success and gives him a new weapon as a reward, which {0} uses to kill {2}.",
+    "img_url": "http://i.imgur.com/cFD7lHW.png"
+  },
+  "sand_people": {
+    "actors": 4,
+    "dies": [
+      1,
+      2,
+      3
+    ],
+    "kills": {
+      "0": [
+        1,
+        2,
+        3
+      ]
+    },
+    "text": "{0} killed not just {1} but {2} and {3} too.",
+    "img_url": "http://i.imgur.com/ZmOhlaD.png"
+  },
+  "order_66": {
+    "actors": 8,
+    "dies": [
+      0
+    ],
+    "kills": {
+      "1": [
+        0
+      ],
+      "2": [
+        0
+      ],
+      "3": [
+        0
+      ],
+      "4": [
+        0
+      ],
+      "5": [
+        0
+      ],
+      "6": [
+        0
+      ],
+      "7": [
+        0
+      ]
+    },
+    "text": "{1}, {2}, {3}, {4}, {5}, {6}, {7} execute order 66 on {0}.",
+    "img_url": "http://i.imgur.com/WWU5xSx.png"
+  },
+  "the_senate": {
+    "actors": 5,
+    "dies": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "kills": {
+      "0": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "text": "{1}, {2}, {3}, and {4} go to arrest {0}.\n\n{0} claims to be the senate, screeches, and kills them all.",
+    "img_url": "http://i.imgur.com/WAj1PLR.png"
+    },
+    "worms": {
+    "actors": 7,
+    "dies": [],
+    "kills": {},
+    "text": "{0} hires {1} to kill {2}\n\n{1} hires {3} to do it.\n\n{3} gives {4} some weird centipedes and tells {4} to throw them through {2}'s window.\n\nLucky for {2}, {5} and {6} were peeping through {2}'s bedroom door and saw the worms in time to save {2}.",
+    "img_url": "http://i.imgur.com/8K2U1BV.png"
+    },
+    "Hungry_Acklay": {
+    "actors": 1,
+    "dies": [
+      0
+    ],
+    "kills": {},
+    "text": "{0}'s spear only made the arena's Acklay even hungrier in their final moments.",
+    "img_url": "http://i.imgur.com/8ecMIzj.jpg"
+    },
+    "ShouldBuyDeathSticks": {
+    "actors": 2,
+    "dies": [
+      0
+    ],
+    "kills": {
+      "1": 0
+    },
+    "text": " {1} offers some deathsticks to {0} \n\n{0} tells {1} to rethink his life.\n\n {0}'s Jedi mind tricks don't work on {1}.\n\n{1} shoots {0} in the head and runs away. ",
+    "img_url": "http://i.imgur.com/EWC6Cf8.jpg "
+    },
+    "ChainedPoles": {
+    "actors": 4,
+    "dies": [],
+    "kills": {},
+    "text": "{0}, {1} and {2} are chained to poles in the arena.\n\n Luckily they escape with the help of {3} and the clone army.",
+    "img_url": "http://i.imgur.com/OynA9jx.jpg"
+    },
+    "NotBrave": {
+    "actors": 1,
+    "dies": [],
+    "kills": {},
+    "text": "{1} is not brave enough for the arena.",
+    "img_url": "http://i.imgur.com/CG81uFx.jpg"
+    },
+     "PartiesOver": {
+    "actors": 2,
+    "dies": [
+      0
+    ],
+    "kills": {
+      "1": 0
+    },
+    "text": "{0} attempts to fly away on their jetpack, but {1} decides {0}'s party is over. ",
+    "img_url": "http://i.imgur.com/vdPYwTC.jpg"
+     },
+     "Reek": {
+    "actors": 1,
+    "dies": [
+      0
+    ],
+    "kills": {},
+    "text": "{0} finds themself on the wrong end of a charging Reek.",
+    "img_url": "http://i.imgur.com/drGYbGl.jpg"
+    },
+       "nexu": {
+    "actors": 1,
+    "dies": [
+      0
+    ],
+    "kills": {},
+    "text": "{0} seems to be on top of things, until they realize that the hungry Nexu can climb too.",
+    "img_url": "http://i.imgur.com/2v6tk5m.jpg"
+    },
+     "Saved": {
+    "actors": 3,
+    "dies": [
+      2
+    ],
+    "kills": {
+      "0": 1 
+    },
+    "text": "{2} nearly ends {0}'s plans before they even start, but is saved by {1}'s accurate shooting.",
+    "img_url": "http://i.imgur.com/LeV1Opd.jpg"
+     },
+       "UntracebaleDart": {
+    "actors": 2,
+    "dies": [
+      0
+    ],
+    "kills": {
+      "1": 0
+    },
+    "text": "{0} is killed by a seemingly untraceable poison dart. Looks like nobody will never find out it was {1} who fired it.",
+    "img_url": "http://i.imgur.com/QghWstb.jpg"
+     },
+   "Qui-Gon-Dead": {
+    "actors": 2,
+    "dies": [
+      1
+    ],
+    "kills": {
+      "0": 1
+    },
+    "text": "{0}'s master wanted {1} dead. {0} runs him through with lightsaber.",
+    "img_url": "http://i.imgur.com/hDxgKEt.jpg"
+     },
+      "Alt_Grievous": {
+    "actors": 2,
+    "dies": [
+      0
+    ],
+    "kills": {
+      "1": 0
+    },
+    "text": "{1} jumps down from the balcony, and says 'hello there!' to {0}.\n\n {}'s droid army does nothing to stop this, as their master enters a duel with {1} and proceeds to be killed by {1}.\n\n {1}'s clone army drops in and destroys {0}'s droid army.",
+    "img_url": "http://i.imgur.com/MQdjOz7.png"
+     },
+  "WatchThoseWR": {
+    "actors": 2,
+    "dies": [
+      1
+    ],
+    "kills": {
+      "0": 1
+    },
+    "text": "{1} fails to watch {0}'s wrist rockets.",
+    "img_url": "http://i.imgur.com/BZcqf0x.png"
+	},
+	"Fuel_Cells": {
+    "actors": 2,
+    "dies": [
+      1
+    ],
+    "kills": {
+      "0": 1
+    },
+    "text": "{0} destroys a Techno Union ship. Unfortunately, {1} doesn't manage to run fast enough from the falling fuel cells.",
+    "img_url": "http://i.imgur.com/UHAvgSu.jpg"
+	},
+	"Podrace_Death": {
+    "actors": 2,
+    "dies": [
+      1
+    ],
+    "kills": {
+      "0": 1
+    },
+    "text": "While racing the final length of the Boonta Eve Classic podrace {1} is killed by {0}.",
+    "img_url": "http://i.imgur.com/FjlCPRC.jpg"
+	},
+	"Rocket_Barage": {
+    "actors": 5,
+    "dies": [
+      1,
+	  2,
+	  3,
+	  4
+    ],
+    "kills": {
+        "0": [
+        1,
+        2,    
+        3,
+        4
+      ]
+    },
+    "text": "{1} and his AT-TE crew of {2}, {3}, and {4} are caught on the wrong end of {0}'s rocket barrage.",
+    "img_url": "http://i.imgur.com/niPfp4s.jpg"
+	},
+	"Force_Fucked": {
+    "actors": 3,
+    "dies": [
+      1
+    ],
+    "kills": {
+        "2": [
+		0
+		]
+    },
+    "text": "{0} and {1} team up to take down {2}. \n\n {1} tells {0} that they should take on {2} together. \n\n {0} ignores {1} and rushes down without {1}. \n\n{2} uses Force Lightning to murder the fuck out of {0}",
+    "img_url": "http://i.imgur.com/jxPIJLM.jpg"
+	},
+	"Falling": {
+    "actors": 2,
+    "dies": [
+      1
+    ],
+    "kills": {},
+    "text": "{0} and {1} are chasing {2} in a speeder.\n\n{1} spots {2} in a speeder down below and jumps to go catch him.\n\n{0} looks down wishing he wouldn't do that.\n\n{1} misses {2}'s speeder and leaves a stain on the pavement",
+    "img_url": "http://i.imgur.com/CJTLUVr.jpg"
+	},
+	"Tresspassing_On_Mandalore": {
+    "actors": 1,
+    "dies": [
+      0
+    ],
+    "kills": {},
+    "text": "{0} is killed by Death Watch after being found trespassing in one of their camps.",
+    "img_url": "http://i.imgur.com/fbsJILO.jpg"
+    },
+	"Body_Double": {
+    "actors": 2,
+    "dies": [
+      0,
+	  1
+    ],
+    "kills": {},
+    "text": "{0} dies in an explosion being a body double for {1}",
+    "img_url": "http://i.imgur.com/zNJK6WA.jpg"
+	}
+}
