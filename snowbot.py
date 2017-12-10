@@ -121,7 +121,7 @@ class Snowbot(commands.Bot):
        if not self.__reaping_active:
            i = random.random()*100
            if(i<self.__trigger_rate):
-               await self.__trig()
+               await self.trig()
        try:
            await self.process_commands(message)
        except (InvalidArgument, CommandInvokeError):
