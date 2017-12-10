@@ -25,7 +25,7 @@ class Snowbot(commands.Bot):
     def __init__(self,pathname=None,**options):
         if pathname is None:
             #path = os.path.dirname(sys.argv[0]) + "/data"
-            path = os.getcwd() + "\data"
+            path = os.getcwd() + "\\data"
         else:
             path = pathname
         print(path)
