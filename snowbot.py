@@ -17,15 +17,47 @@ import json
 import argparse
 import aiohttp
 import configparser
-import os
+import sys,os
 import datetime
 
 class Snowbot(commands.Bot):
     
-    def __init__(self,path=r"C:\Python\snowbot",**options):
+    def __init__(self,pathname=None,**options):
+        if pathname is None:
+            path = os.path.dirname(sys.argv[0]) + "/data"
+        else:
+            path = pathname
+        print(path)
         self.__version = "0.0.1"
-        print("For help:")
+        print("Snowbot")
+        print("Version " + self.__version)
+        print("https://github.com/cucumber-crusaders/Snowbot")
         print("http://discord.gg/5HZE9A4")
+        print(r"""
+ __
+/00\
+\000\_, ´¯¯¯` 、
+ \0000000000000`、
+ /0000**000000000\
+|000000**000**0000\
+|000**00**000**0000`、
+ \000**00**000**00000`、
+  \000**00**000**000000` 、
+   \000**00**000**00000000` 、
+    \000**000**000**000000000` 、
+     \0000**000**000**0000000000` 、
+      `、0000**000**0000**0000000000`、  
+        \00000**0000**0000**000000000\
+         `、000000**000**00000000000000\
+           `、000000**0000**000000000000|
+             `、000000**00000**000000000|
+               ` 、0000000**0000**000000|
+                  ` 、00000000000000000/
+                      `  、00000000000/
+                           ` - - - -´
+        """)
+
+        print("\n\n\n\n")
         """Populate attrs from config"""
         
         os.chdir(path)
@@ -72,11 +104,15 @@ class Snowbot(commands.Bot):
         
         
     async def on_ready(self):
-        
+        print("done") #the last print statement SHOULD HAVE BEEN "Logging in..." from the "run" routine.
+        if(len(self.servers) == 0):
+            print("I am not in any servers!!!")
         snid = self.user.id
         inv_link = "https://discordapp.com/oauth2/authorize?client_id=" + snid + "&scope=bot&permissions=117760"
-        print("invite link:")
-        print(inv_link)
+        print("\ninvite link:\n")
+        print(inv_link + "\n")
+        print("Setting up game stuff...",end="")
+        
         if(len(self.servers) > 0):
             self.__main_server = self.get_server(self.__config["servers"]["main"])
             
@@ -88,7 +124,6 @@ class Snowbot(commands.Bot):
             self.__all_players_role = discord.utils.get(self.__main_server.roles, id=self.__config["roles"]["all-players"])
             self.__alive_players_role = discord.utils.get(self.__main_server.roles, id=self.__config["roles"]["alive-players"])
             
-            
             if self.__config["snowbot"].getboolean("notify-startup"):
                 
                 embed = discord.Embed(title=self.__config["snowbot"]["restart-text"], colour=self.__color,url="https://discord.gg/5HZE9A4")
@@ -99,9 +134,10 @@ class Snowbot(commands.Bot):
         
                 await self.send_message(self.__public_console,embed=embed)
             await self.change_presence(game=discord.Game(name=self.__gamestatus,type=0))
-            
-    
-    
+        print("done.")
+        print("Game time started.")
+        
+        
     async def on_message(self,message):
        #if message.channel.id in self.__watched_channels and not self.__reaping_active:
        if not self.__reaping_active:
@@ -118,25 +154,43 @@ class Snowbot(commands.Bot):
     
     
     def register_snowbot_commands(self):
-        self.public_command(self.remaining_tributes,name="remaining_tributes",pass_context=True,aliases=['list','alive','tributes','survs','survivors'])
-        self.public_command(self.team,name="team",pass_context=True,aliases=['district','dist'])
-        self.public_command(self.list_teams,name="list_teams",pass_context=True,aliases=['teams','districts'])
-        self.public_command(self.is_alive,name="is_alive",pass_context=True,aliases=["status","dead"])
-        self.public_command(self.join_team,name="join_team",pass_context=True,aliases=['join','enlist','set_team'])
-        self.public_command(self.player_info_embed,name="player",pass_context=True,aliases=['info'])
-        self.mod_command(self.reload,name="reload",pass_context=True,aliases=['refresh','update'])
-        #self.command(name="fix_leaders",checks=[self.mod_command],pass_context=True)
-        self.mod_command(self.reap,name="reap",pass_context=True,aliases=['start','begin','reaping'])
-        self.mod_command(self.cull,name="cull",pass_context=True,aliases=['end','reset','cancel','finish'])
-        self.mod_command(self.trig,name="trig",pass_context=True,aliases=['trigger','event','go'])
-        self.mod_command(self.list_events,name="list_events",pass_context=True,aliases=['events'])
-        #self.command(name="set_trigger_rate",checks=[self.mod_command],pass_context=False,aliases=['feminism','rate'])(self.set_trigger_rate)
-        self.mod_command(self.list_teams,name="setup_teams",pass_context=True,aliases=['reset_teams','fix_teams'])
+        """
+        This defines the discord commands.
+        There are twol.5jk1m
+        """
+        print("Registering commands...",end="")
+        """
+        Public commands. 
+        These commands are used to change teams and get information about players, teams, etc.
+        These will only work in the "public-console" or the "mod-console". 
+        If you want user to be able to use these commands in "arena", make "arena" and "mod-console" the same channel.
+        """
+        self.public_command(self.remaining_tributes,name="remaining_tributes",pass_context=True,aliases=['list','alive','tributes','survs','survivors'],help="List the remaining tributes still alive.")
+        self.public_command(self.team,name="team",pass_context=True,aliases=['district','dist'],help="Get information about your team or another users team.")
+        self.public_command(self.list_teams,name="list_teams",pass_context=True,aliases=['teams','districts'],help="List currently available teams.")
+        self.public_command(self.is_alive,name="is_alive",pass_context=True,aliases=["status","dead"],help="Check the status\nStatus is living, dead, or missing. Missing means the user is not a tribute at all.")
+        self.public_command(self.join_team,name="join_team",pass_context=True,aliases=['join','enlist','set_team'],help="Change teams.\nUse the number from `"+self.__config["snowbot"]["prefix"]+"teams`.")
+        self.public_command(self.player_info_embed,name="player",pass_context=True,aliases=['info'],help="Get info about the bot.")
         
+        """
+        Mod commands. 
+        These commands are used to manage the game.
+        These will only work in the "mod-console" channel.
+        """
+        self.mod_command(self.reload,name="reload",pass_context=True,aliases=['refresh','update'],help="Reload the files \nDo this if you have made changes after the last time the bot restarted.")
+        #self.command(name="fix_leaders",checks=[self.mod_command],pass_context=True)
+        self.mod_command(self.reap,name="reap",pass_context=True,aliases=['start','begin','reaping'],help="Start the game.")
+        self.mod_command(self.cull,name="cull",pass_context=True,aliases=['end','reset','cancel','finish'],help="Prematurely end the game.")
+        self.mod_command(self.trig,name="trig",pass_context=True,aliases=['trigger','event','go'],help="Manually trigger an event.")
+        self.mod_command(self.list_events,name="list_events",pass_context=True,aliases=['events'],help="List all events\nThe number in parenthesis is the number of tributes involved in the event.")
+        #self.command(name="set_trigger_rate",checks=[self.mod_command],pass_context=False,aliases=['feminism','rate'])(self.set_trigger_rate)
+        self.mod_command(self.list_teams,name="setup_teams",pass_context=True,aliases=['reset_teams','fix_teams'],help="Resets everyone to a default team.\nThis will ensure that team leaders are on the right team. If you are having trouble with teams, try this, although be cautioned since this will reset everyone else's team.")
+        print("done.")
     def run(self):
+        print("Logging in...",end="")
         snowkey = self.__config["discordapp"]["token"]        
         super().run(snowkey)
-        print("If you are seeing this, something went wrong...")
+        print("If you are seeing this, something went wrong... If you tried to copy/paste something from the console that is probably why. Right click, don't do ctrl+c")
         
     def random_event(self,n=1):
         return random.sample(list(filter(lambda x: self.__snow_events[x]["actors"] <= n and self.__snow_events[x]["actors"] > 0, self.__snow_events)),1)[0]
